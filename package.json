@@ -1,17 +1,24 @@
 {
-  "name": "lunaia",
+  "name": "LunaIA",
   "version": "1.0.0",
-  "description": "## Configuração do Ambiente",
+  "description": "Aplicação de Gerenciamento de Tarefas Com IA",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/app.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "gerenciamento de tarefas",
+    "IA",
+    "node.js",
+    "express",
+    "mongodb"
+  ],
+  "author": "Seu Nome",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.1",
