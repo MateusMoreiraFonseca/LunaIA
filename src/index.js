@@ -7,6 +7,7 @@ const path = require('path');
 const { mongoDB } = require("./helpers/mongodb");
 const { createAdminUser } = require("./setup/setupAdmin");
 const loginRoutes = require("./routes/loginRoutes");
+const registerRoutes = require("./routes/registerRoutes");
 
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.use(bodyParser.json());
 
 app.use("/", indexRoutes);
 app.use("/auth", loginRoutes);
+app.use("/signup", registerRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor iniciado na porta ${PORT}`);

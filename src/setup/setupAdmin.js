@@ -13,7 +13,7 @@ const createAdminUser = async () => {
       };
 
       await User.create(adminUser);
-      console.log("Usuário administrador criado com sucesso");
+      console.log("Usuário administrador criado com sucesso.");
     }
   } catch (error) {
     console.error("Erro ao criar usuário administrador:", error);

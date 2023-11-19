@@ -12,11 +12,11 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(401).json({ message: "Usuário não encontrado" });
+      return res.status(401).json({ message: "Usuário não encontrado." });
     }
 
     if (password !== user.password) {
-      return res.status(401).json({ message: "Senha incorreta" });
+      return res.status(401).json({ message: "Senha incorreta." });
     }
 
     const payload = {
@@ -29,10 +29,10 @@ router.post("/login", async (req, res) => {
       expiresIn: "24h",
     });
 
-    res.status(200).json({ token, message: "Login com sucesso" });
+    res.status(200).json({ token, message: "Login com sucesso." });
   } catch (error) {
     console.error("Erro ao fazer login:", error);
-    res.status(500).json({ message: "Erro interno do servidor" });
+    res.status(500).json({ message: "Erro interno do servidor." });
   }
 });
 
@@ -52,15 +52,11 @@ router.post("/reset-password", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    const resetTokenExpiration = Date.now() + 3600000;
-    user.resetToken = resetToken;
-    user.resetTokenExpiration = resetTokenExpiration;
-
     await user.save();
 
     res
       .status(200)
-      .json({ resetToken, message: "Solicitação de reset de senha enviada" });
+      .json({ resetToken, message: "Solicitação de reset de senha enviada." });
   } catch (error) {
     console.error("Erro ao solicitar redefinição de senha:", error);
     res.status(500).json({ message: "Erro interno do servidor." });
