@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
 const path = require('path'); 
 const { mongoDB } = require("./helpers/mongodb");
+const { createAdminUser } = require("./setup/setupAdmin");
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 mongoDB();
+createAdminUser();
 
 app.use(bodyParser.json());
 
