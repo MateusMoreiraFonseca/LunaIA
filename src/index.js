@@ -24,6 +24,7 @@ createAdminUser();
 
 app.use(bodyParser.json());
 
+
 app.use("/", indexRoutes);
 app.use("/auth", loginRoutes);
 
