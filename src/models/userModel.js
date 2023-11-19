@@ -1,6 +1,7 @@
 // models/userModel.js
 const mongoose = require("mongoose");
 
+
 const respostaSchema = new mongoose.Schema({
   pergunta: { type: String, required: true },
   resposta: { type: String, required: true },
@@ -14,6 +15,8 @@ const userSchema = new mongoose.Schema({
   nome: { type: String },
   idade: { type: Number },
   RespostasSalvasIA: [respostaSchema],
+  resetToken: { type: String },
+  resetTokenExpiration: { type: Date },
 });
 
 const User = mongoose.model("User", userSchema);
