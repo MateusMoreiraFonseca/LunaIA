@@ -15,8 +15,7 @@ const userSchema = new mongoose.Schema({
   nome: { type: String },
   idade: { type: Number },
   RespostasSalvasIA: [respostaSchema],
-  resetToken: { type: String },
-  resetTokenExpiration: { type: Date },
+  resetToken: { type: String }, 
 });
 userSchema.pre("save", async function (next) {
   try {

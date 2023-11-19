@@ -2,6 +2,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
@@ -15,7 +16,12 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Usuário não encontrado." });
     }
 
-    if (password !== user.password) {
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    console.log("Senha fornecida:", password);
+    console.log("Senha armazenada:", user.password);
+
+    if (!isPasswordValid) {
       return res.status(401).json({ message: "Senha incorreta." });
     }
 
@@ -31,7 +37,6 @@ router.post("/login", async (req, res) => {
 
     res.status(200).json({ token, message: "Login com sucesso." });
   } catch (error) {
-    console.error("Erro ao fazer login:", error);
     res.status(500).json({ message: "Erro interno do servidor." });
   }
 });
@@ -51,6 +56,8 @@ router.post("/reset-password", async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
+
+    user.resetToken = resetToken;
 
     await user.save();
 
@@ -73,7 +80,18 @@ router.post("/redefine-password", async (req, res) => {
         .json({ message: "Token e newPassword são obrigatórios." });
     }
 
-    await User.updateOne({ resetToken: token }, { password: newPassword });
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(decodedToken.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado." });
+    }
+
+    user.password = newPassword;
+    user.resetToken = null;
+
+    await user.save();
 
     return res.status(200).json({ message: "Senha redefinida com sucesso." });
   } catch (error) {
