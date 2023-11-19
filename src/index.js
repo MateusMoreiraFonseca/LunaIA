@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const path = require('path'); 
 const { mongoDB } = require("./helpers/mongodb");
 const { createAdminUser } = require("./setup/setupAdmin");
+const loginRoutes = require("./routes/loginRoutes");
+
 
 dotenv.config();
 
@@ -23,6 +25,7 @@ createAdminUser();
 app.use(bodyParser.json());
 
 app.use("/", indexRoutes);
+app.use("/auth", loginRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor iniciado na porta ${PORT}`);
