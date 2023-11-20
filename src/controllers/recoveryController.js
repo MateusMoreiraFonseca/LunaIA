@@ -1,12 +1,9 @@
-// src/routes/authRoutes.js
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 
-const router = express.Router();
-
-router.post("/login", async (req, res) => {
+const loginUser = async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -24,7 +21,7 @@ router.post("/login", async (req, res) => {
     const infoToken = {
       userId: user._id,
       username: user.username,
-      isAdmin: user.isAdmin,
+      isAdmin: user.isAdmin,      
     };
 
     const token = jwt.sign({ payload: infoToken }, process.env.JWT_SECRET, {
@@ -40,9 +37,9 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Erro interno do servidor." });
   }
-});
+};
 
-router.post("/reset-password", async (req, res) => {
+const resetPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -69,9 +66,9 @@ router.post("/reset-password", async (req, res) => {
     console.error("Erro ao solicitar redefinição de senha:", error);
     res.status(500).json({ message: "Erro interno do servidor." });
   }
-});
+};
 
-router.post("/redefine-password", async (req, res) => {
+const redefinePassword = async (req, res) => {
   try {
     const { token, newPassword } = req.body;
 
@@ -104,6 +101,6 @@ router.post("/redefine-password", async (req, res) => {
 
     return res.status(500).json({ message: "Erro interno do servidor." });
   }
-});
+};
 
-module.exports = router;
+module.exports = { loginUser, resetPassword, redefinePassword };

@@ -9,7 +9,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const userRoutes = require("./routes/userRoutes");
-const loginRoutes = require("./routes/loginRoutes");
+const recoveryRoutes = require("./routes/recoveryRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,8 +25,11 @@ createAdminUser();
 
 app.use(bodyParser.json());
 
-app.use("/auth", loginRoutes);
 app.use("/user", userRoutes);
+app.use("/recovery", recoveryRoutes);
+app.use("/admin", adminRoutes);
+
+
 
 app.listen(PORT, () => {
   console.log(`Servidor iniciado na porta ${PORT}`);
