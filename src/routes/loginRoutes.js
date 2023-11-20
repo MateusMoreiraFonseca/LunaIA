@@ -17,25 +17,26 @@ router.post("/login", async (req, res) => {
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    console.log("Senha fornecida:", password);
-    console.log("Senha armazenada:", user.password);
-
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Senha incorreta." });
     }
 
-    const payload = {
+    const infoToken = {
       userId: user._id,
       username: user.username,
       isAdmin: user.isAdmin,
     };
 
-    const token = jwt.sign({ payload }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ payload: infoToken }, process.env.JWT_SECRET, {
       expiresIn: "24h",
     });
 
-    res.status(200).json({ token, message: "Login com sucesso." });
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).json({ message: "Login com sucesso." });
   } catch (error) {
     res.status(500).json({ message: "Erro interno do servidor." });
   }
