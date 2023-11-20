@@ -1,43 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
-const bcrypt = require("bcrypt");
 
-const loginUser = async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    const user = await User.findOne({ username });
-
-    if (!user) {
-      return res.status(401).json({ message: "Usuário não encontrado." });
-    }
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: "Senha incorreta." });
-    }
-
-    const infoToken = {
-      userId: user._id,
-      username: user.username,
-      isAdmin: user.isAdmin,      
-    };
-
-    const token = jwt.sign({ payload: infoToken }, process.env.JWT_SECRET, {
-      expiresIn: "24h",
-    });
-
-    res.cookie("token", token, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-
-    res.status(200).json({ message: "Login com sucesso." });
-  } catch (error) {
-    res.status(500).json({ message: "Erro interno do servidor." });
-  }
-};
 
 const resetPassword = async (req, res) => {
   const { email } = req.body;
@@ -103,4 +67,4 @@ const redefinePassword = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, resetPassword, redefinePassword };
+module.exports = { resetPassword, redefinePassword };

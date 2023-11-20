@@ -1,6 +1,46 @@
 const jwt = require("jsonwebtoken");
-const authMiddleware = require("../middlewares/authMiddleware");
+const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
+
+const loginUser = async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      console.log(`Usuário não encontrado para o username: ${username}`);
+      return res.status(401).json({ message: "Usuário não encontrado." });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      console.log(`Senha incorreta para o username: ${username}`);
+      return res.status(401).json({ message: "Senha incorreta." });
+    }
+
+    const infoToken = {
+      userId: user._id,
+      username: user.username,
+      isAdmin: user.isAdmin,
+    };
+
+    const token = jwt.sign({ payload: infoToken }, process.env.JWT_SECRET, {
+      expiresIn: "12h",
+    });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    console.log(`Usuário ${username} fez login com sucesso.`);
+    res.status(200).json({ message: "Login com sucesso." });
+  } catch (error) {
+    console.error("Erro durante o login:", error);
+    res.status(500).json({ message: "Erro interno do servidor." });
+  }
+};
 
 const registerUser = async (req, res) => {
   try {
@@ -71,4 +111,4 @@ const updateUserData = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, updateUserData };
+module.exports = { loginUser, registerUser, updateUserData };
