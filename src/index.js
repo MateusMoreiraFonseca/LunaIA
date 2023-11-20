@@ -1,15 +1,14 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const indexRoutes = require("./routes/indexRoutes");
+
 const bodyParser = require("body-parser");
-const cookieParser = require('cookie-parser');
-const path = require('path'); 
+const cookieParser = require("cookie-parser");
+const path = require("path");
 const { mongoDB } = require("./helpers/mongodb");
 const { createAdminUser } = require("./setup/setupAdmin");
-const loginRoutes = require("./routes/loginRoutes");
 
-const userRoutes = require("./routes/userRoutes")
-
+const userRoutes = require("./routes/userRoutes");
+// const recoveryRoutes = require("./routes/recoveryRoutes");
 
 dotenv.config();
 
@@ -26,10 +25,8 @@ createAdminUser();
 
 app.use(bodyParser.json());
 
-
-app.use("/", indexRoutes);
-app.use("/auth", loginRoutes);
 app.use("/user", userRoutes);
+// app.use("/recovery", recoveryRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor iniciado na porta ${PORT}`);
