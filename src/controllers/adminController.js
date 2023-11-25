@@ -1,5 +1,5 @@
 const userService = require("../services/userService");
-const User = require("../models/userModel");
+
 
 const setAdmin = async (req, res) => {
   try {
@@ -11,7 +11,7 @@ const setAdmin = async (req, res) => {
         .json({ message: "É necessário fornecer userId, username ou email." });
     }
 
-    const userToUpdate = await userService.getUser({
+    const userToUpdate = await userService.getUserByIdUsernameEmail({
       userId,
       username,
       email,
@@ -52,7 +52,7 @@ const removeAdmin = async (req, res) => {
       conditions.email = email;
     }
 
-    const userToUpdate = await User.findOne(conditions);
+    const userToUpdate = await userService.getUserByIdUsernameEmail(conditions);
 
     if (!userToUpdate) {
       return res.status(404).json({ message: "Usuário não encontrado." });
