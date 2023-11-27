@@ -28,21 +28,44 @@
 
 ## Funcionalidades Propostas
 
-1. **Usuários e Sistema de Autenticação (25%):**
+1. Cadastro de Usuários
+   Implemente uma rota para o cadastro de usuários, recebendo dados pessoais e credenciais.
+   Status:OK
 
-   - Implemente rotas para cadastro, login, recuperação de senha, alteração de dados pessoais, criação e exclusão de administradores.
-   - Gere tokens JWT para autenticação.
+2. Usuários Administradores
+   Crie um usuário administrador por padrão durante a instalação do sistema.
+   Implemente uma rota para que administradores possam criar outros administradores.
+   Status:OK
 
-2. **Sistema CRUD (25%):**
+3. Rota para Criar Administradores
+   Implemente a rota createUserAdmin para criar administradores.
+   Status:OK
 
-   - Implemente as operações CRUD para Tarefas, Projetos, Categorias, e qualquer outra entidade escolhida.
-   - Valide dados fornecidos pelos usuários e envie mensagens de erro/sucesso apropriadas.
-   - Implemente paginação para as operações de listar.
+4. Excluir Usuário não Administrador
+   Implemente uma rota para que administradores possam excluir usuários não administradores.
+   Status:OK
 
-3. **Lógica de Negócio, Instalador e Documentação (50%):**
-   - Desenvolva uma operação especial de livre escolha que envolva lógica de negócio significativa.
-   - Crie a rota GET `/install/` para inicialização do banco de dados.
-   - Utilize o Swagger para documentar sua API.
+5. Rota de Login e Token JWT
+   Implemente a rota loginUser para gerar um token JWT para acesso às rotas protegidas da API.
+   Status:OK
+
+6. Alterar Dados Pessoais
+   Implemente uma rota para que usuários possam alterar seus dados pessoais (updateUserBySelf). Restrinja aos próprios usuários e permita que administradores alterem dados de outros usuários.
+   Status:OK
+
+7. Sistema CRUD
+   Implemente operações de CRUD para os recursos específicos do seu sistema.
+   Realize a validação adequada dos dados fornecidos pelo usuário.
+   
+8. Paginação
+   Implemente a lógica de paginação nas rotas de listagem, recebendo os parâmetros limite e página.
+
+9. Lógica de Negócio
+   Implemente uma operação especial de livre escolha, envolvendo processamento de dados, inserção/alteração no banco de dados ou geração de consultas elaboradas.
+
+10. Instalador e Documentação
+    Implemente a rota GET /install/ para realizar a instalação do banco de dados.
+    Utilize o Swagger ou outra ferramenta para gerar a documentação da API (GET /docs).
 
 ## Prazos de Entrega
 

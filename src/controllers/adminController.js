@@ -1,6 +1,34 @@
 const userService = require("../services/userService");
 const adminService = require("../services/adminService");
 
+const registerAdmin = async (req, res) => {
+  try {
+    const { username, password, email, nameUser, age } = req.body;
+
+    const existingUser = await userService.getUserByIdUsernameEmail({
+      username,
+      email,
+    });
+
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "Usuário ou e-mail já cadastrado." });
+    }
+
+    await adminService.createAdmin({
+      username,
+      password,
+      email,
+      nameUser,
+      age,
+    });
+
+    res.status(201).json({ message: "Cadastro realizado com sucesso." });
+  } catch (error) {
+    res.status(500).json({ message: "Erro interno do servidor." });
+  }
+};
 const setAdmin = async (req, res) => {
   try {
     const { userId, username, email } = req.body;
@@ -97,4 +125,5 @@ module.exports = {
   setAdmin,
   removeAdmin,
   deleteUser,
+  registerAdmin
 };

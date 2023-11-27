@@ -1,4 +1,3 @@
-// setupAdmin.js
 const User = require("../models/userModel");
 
 const createAdminUser = async () => {
@@ -6,17 +5,26 @@ const createAdminUser = async () => {
     const existingAdmin = await User.findOne({ isAdmin: true });
 
     if (!existingAdmin) {
-      const adminUser = {
-        username: "admin",
-        password: "admin123",
-        email: "adminEspecial@admin.com",
+      const adminUserData = {
+        username: process.env.DEFAULT_ADMIN_USERNAME,
+        email: process.env.DEFAULT_ADMIN_EMAIL,
+        password: process.env.DEFAULT_ADMIN_PASSWORD,
         isAdmin: true,
       };
 
-      await User.create(adminUser);
-      console.log("Usuário administrador criado com sucesso.", existingAdmin.username);
+      const newAdmin = new User(adminUserData);
+
+      await newAdmin.save();
+
+      console.log(
+        "Usuário administrador criado com sucesso:",
+        newAdmin.username
+      );
     } else {
-      console.log("Já existe um usuário administrador:", existingAdmin.username);
+      console.log(
+        "Já existe um usuário administrador:",
+        existingAdmin.username
+      );
     }
   } catch (error) {
     console.error("Erro ao criar ou verificar usuário administrador:", error);

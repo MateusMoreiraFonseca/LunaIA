@@ -4,31 +4,31 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
 const getUserByIdUsernameEmail = async (conditions) => {
-  try {
-    if (typeof conditions !== "object") {
-      throw new Error(
-        "Condições inválidas fornecidas para a busca do usuário."
-      );
-    }
-
-    const { username, email, userId } = conditions;
-
-    const searchConditions = {};
-    if (userId) {
-      searchConditions._id = userId;
-    } else if (username) {
-      searchConditions.username = username;
-    } else if (email) {
-      searchConditions.email = email;
-    }
-
-    const user = await User.findOne(searchConditions);
-
-    return user;
-  } catch (error) {
-    throw error;
+  if (!conditions || Object.keys(conditions).length === 0) {
+    throw new Error("Condições inválidas fornecidas para a busca do usuário.");
   }
+
+  const { username, email, userId } = conditions;
+
+  if (!userId && !username && !email) {
+    throw new Error("É necessário fornecer userId, username ou email.");
+  }
+
+  const searchConditions = {};
+
+  if (userId) {
+    searchConditions._id = userId;
+  } else if (username) {
+    searchConditions.username = username;
+  } else if (email) {
+    searchConditions.email = email;
+  }
+
+  return await User.findOne(searchConditions);
 };
+
+module.exports = { getUserByIdUsernameEmail };
+
 
 const createUser = async (userData, res) => {
   try {
