@@ -12,8 +12,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   isAdmin: { type: Boolean, default: false },
-  nome: { type: String },
-  idade: { type: Number },
+  nameUser: { type: String },
+  age: { type: Number },
   RespostasSalvasIA: [respostaSchema],
   resetToken: { type: String },
 });

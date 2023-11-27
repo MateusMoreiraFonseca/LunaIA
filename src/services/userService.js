@@ -1,6 +1,6 @@
 // userService.js
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+
 const User = require("../models/userModel");
 
 const getUserByIdUsernameEmail = async (conditions) => {
@@ -30,35 +30,57 @@ const getUserByIdUsernameEmail = async (conditions) => {
   }
 };
 
-const updateUser = async (conditions, userData, res) => {
+const createUser = async (userData, res) => {
   try {
-    const { nome, idade, newPassword, newUsername, newEmail } = userData;
-    const user = await getUserByIdUsernameEmail(conditions);
+    const { username, email, password, nameUser, age } = userData;
+
+    const newUser = new User({
+      username,
+      email,
+      password,
+      nameUser,
+      age,
+    });
+
+    await newUser.save();
+
+    return {
+      message: "Usuário criado com sucesso.",
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateUser = async (user, userData, res) => {
+  try {
+    const { username, password, email, nameUser, age } = userData;
 
     if (!user) {
       throw new Error("Usuário não encontrado.");
     }
 
-    user.nome = nome || user.nome;
-    user.idade = idade || user.idade;
-
-    if (newPassword) {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(newPassword, salt);
-      user.password = hashedPassword;
+    if (username) {
+      user.username = username;
     }
 
-    // Handle username and email updates
-    if (newUsername) {
-      user.username = newUsername;
+    if (password) {
+      user.password = password;
     }
 
-    if (newEmail) {
-      user.email = newEmail;
+    if (email) {
+      user.email = email;
+    }
+
+    if (nameUser) {
+      user.nameUser = nameUser;
+    }
+
+    if (age) {
+      user.age = age;
     }
 
     await user.save();
-    saveToken(user, res);
 
     return {
       message: "Dados pessoais atualizados com sucesso.",
@@ -88,4 +110,9 @@ const saveToken = (user, res) => {
   return token;
 };
 
-module.exports = { getUserByIdUsernameEmail,updateUser, saveToken };
+module.exports = {
+  getUserByIdUsernameEmail,
+  updateUser,
+  saveToken,
+  createUser,
+};

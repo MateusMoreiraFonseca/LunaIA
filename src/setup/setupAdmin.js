@@ -9,12 +9,12 @@ const createAdminUser = async () => {
       const adminUser = {
         username: "admin",
         password: "admin123",
-        email: "admin@example.com",
+        email: "adminEspecial@admin.com",
         isAdmin: true,
       };
 
       await User.create(adminUser);
-      console.log("Usuário administrador criado com sucesso.");
+      console.log("Usuário administrador criado com sucesso.", existingAdmin.username);
     } else {
       console.log("Já existe um usuário administrador:", existingAdmin.username);
     }

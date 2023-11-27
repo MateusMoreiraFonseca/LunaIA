@@ -7,7 +7,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 
 router.post("/login", userController.loginUser);
-router.post("/registrar-usuario", userController.registerUser);
-router.put("/alterar-dados", authMiddleware, userController.updateUser);
+router.post("/register-user", userController.registerUser);
+router.put("/alter-userdata", authMiddleware, userController.updateUserBySelf);
 
 module.exports = router;

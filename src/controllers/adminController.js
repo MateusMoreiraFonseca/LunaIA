@@ -1,5 +1,5 @@
 const userService = require("../services/userService");
-
+const adminService = require("../services/adminService");
 
 const setAdmin = async (req, res) => {
   try {
@@ -52,7 +52,9 @@ const removeAdmin = async (req, res) => {
       conditions.email = email;
     }
 
-    const userToUpdate = await userService.getUserByIdUsernameEmail(conditions);
+    const userToUpdate = await userService.getUserByIdUsernameEmail(
+      conditions
+    );
 
     if (!userToUpdate) {
       return res.status(404).json({ message: "Usuário não encontrado." });
@@ -61,7 +63,7 @@ const removeAdmin = async (req, res) => {
     if (!userToUpdate.isAdmin) {
       return res
         .status(403)
-        .json({ message: "O usuário não é um administrador." });
+        .json({ message: "O usuário já não é um administrador." });
     }
 
     userToUpdate.isAdmin = false;
@@ -76,4 +78,23 @@ const removeAdmin = async (req, res) => {
   }
 };
 
-module.exports = { setAdmin, removeAdmin };
+const deleteUser = async (req, res) => {
+  try {
+    const { username, password, email } = req.body;
+
+    const conditions = { username, password, email };
+
+    const result = await adminService.deleteUser(conditions);
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Erro ao excluir usuário:", error);
+    res.status(500).json({ message: "Erro interno do servidor." + error });
+  }
+};
+
+module.exports = {
+  setAdmin,
+  removeAdmin,
+  deleteUser,
+};

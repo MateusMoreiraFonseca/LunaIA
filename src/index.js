@@ -11,6 +11,8 @@ dotenv.config();
 const userRoutes = require("./routes/userRoutes");
 const recoveryRoutes = require("./routes/recoveryRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const installRoutes = require("./routes/installRoutes");
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,6 +27,7 @@ createAdminUser();
 
 app.use(bodyParser.json());
 
+app.use("/", installRoutes);
 app.use("/user", userRoutes);
 app.use("/recovery", recoveryRoutes);
 app.use("/admin", adminRoutes);
