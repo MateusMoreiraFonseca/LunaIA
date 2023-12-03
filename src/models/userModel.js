@@ -5,7 +5,7 @@ const respostaIaSchema = new mongoose.Schema({
   pergunta: { type: String, required: true },
   titulo: { type: String, required: true },
   resposta: { type: String, required: true },
-  task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' }, 
+  task: { type: mongoose.Schema.Types.ObjectId, ref: "Task" },
 });
 
 const userSchema = new mongoose.Schema({
@@ -37,6 +37,5 @@ userSchema.pre("save", async function (next) {
 });
 
 const User = mongoose.model("User", userSchema);
-const RespostaIa = mongoose.model("RespostaIa", respostaIaSchema);
 
-module.exports = { User, RespostaIa };
+module.exports = { User };

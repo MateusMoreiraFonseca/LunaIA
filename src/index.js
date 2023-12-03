@@ -13,6 +13,7 @@ const userRoutes = require("./routes/userRoutes");
 const recoveryRoutes = require("./routes/recoveryRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const tasksRoutes = require("./routes/taskRoutes");
+const respostaIaRoutes = require("./routes/respostaIaRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,6 +33,7 @@ app.use("/user", userRoutes);
 app.use("/recovery", recoveryRoutes);
 app.use("/admin", adminRoutes);
 app.use("/tasks", tasksRoutes);
+app.use("/ia", respostaIaRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor iniciado na porta ${PORT}`);

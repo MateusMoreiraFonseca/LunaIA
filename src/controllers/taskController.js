@@ -1,7 +1,4 @@
 const taskService = require("../services/taskService");
-const userService = require("../services/userService");
-const { User } = require("../models/userModel");
-const { RespostaIa } = require("../models/userModel");
 
 const createTask = async (req, res) => {
   try {
@@ -108,36 +105,6 @@ const getTasksForNextWeek = async (req, res) => {
   }
 };
 
-const perguntaIA = async (req, res) => {
-  try {
-    const idUser = req.user;
-    const user = await userService.getUserByIdUsernameEmail(idUser);
-    const taskId = req.params.taskId;
-    const { pergunta } = req.body;
-
-    const task = await taskService.getTaskById(taskId);
-
-    const resposta = await taskService.obterRespostaDoGPT(pergunta, task);
-
-    const respostaIa = new RespostaIa({
-      pergunta,
-      resposta,
-      titulo: task.title,
-      task: task._id,
-    });
-
-    await respostaIa.save();
-
-    user.RespostasSalvasIA.push(respostaIa);
-    await user.save();
-
-    res.status(201).json({ message: "PerguntaIA criada com sucesso." });
-  } catch (error) {
-    console.error("Erro ao criar CaixaIA:", error);
-    res.status(500).json({ message: "Erro interno do servidor." });
-  }
-};
-
 module.exports = {
   createTask,
   getTasksByUser: getSelfTasks,
@@ -145,5 +112,4 @@ module.exports = {
   updateTask,
   deleteTask,
   getTasksForNextWeek,
-  perguntaIA,
 };

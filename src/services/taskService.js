@@ -3,9 +3,7 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const OpenAI = require("openai");
-const apiKey = process.env.API_KEY;
-const openai = new OpenAI({ apiKey });
+
 
 const createTask = async (taskData) => {
   try {
@@ -132,33 +130,6 @@ const getTasksForNextWeek = async (userId, startDate, endDate) => {
     throw error;
   }
 };
-const obterRespostaDoGPT = async (pergunta, task) => {
-  try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content: task.title + " " + task.description,
-        },
-        { role: "user", content: pergunta },
-      ],
-    });
-
-    if (response.choices && response.choices.length > 0) {
-      const respostaTexto = response.choices[0].message.content;
-      return respostaTexto;
-    } else {
-      console.error("Nenhuma resposta válida recebida.");
-
-      return "Desculpe, não foi possível obter uma resposta neste momento.";
-    }
-  } catch (error) {
-    console.error("Erro na chamada da API:", error);
-
-    return "Desculpe, ocorreu um erro ao obter a resposta.";
-  }
-};
 
 module.exports = {
   createTask,
@@ -168,5 +139,4 @@ module.exports = {
   getTasksByStatus,
   getTasksForNextWeek,
   getTaskById,
-  obterRespostaDoGPT,
 };
