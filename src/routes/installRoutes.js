@@ -6,8 +6,8 @@ const router = express.Router();
 const { createAdminUser } = require("../setup/setupAdmin");
 
 router.get('/install', (req, res) => { 
-    createAdminUser();
-    res.send('UsuárioAdmEspecial criado ou já existe');
+    
+    res.send(createAdminUser());
 });
 
 module.exports = router;

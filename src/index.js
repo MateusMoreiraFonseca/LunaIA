@@ -8,11 +8,11 @@ const { createAdminUser } = require("./setup/setupAdmin");
 const dotenv = require("dotenv");
 dotenv.config();
 
+const installRoutes = require("./routes/installRoutes");
 const userRoutes = require("./routes/userRoutes");
 const recoveryRoutes = require("./routes/recoveryRoutes");
 const adminRoutes = require("./routes/adminRoutes");
-const installRoutes = require("./routes/installRoutes");
-
+const tasksRoutes = require("./routes/taskRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -31,8 +31,7 @@ app.use("/", installRoutes);
 app.use("/user", userRoutes);
 app.use("/recovery", recoveryRoutes);
 app.use("/admin", adminRoutes);
-
-
+app.use("/tasks", tasksRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor iniciado na porta ${PORT}`);

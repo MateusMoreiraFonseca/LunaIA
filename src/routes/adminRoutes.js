@@ -7,5 +7,6 @@ router.put("/set-admin", authAdminMiddleware, adminController.setAdmin);
 router.put("/remove-admin", authAdminMiddleware, adminController.removeAdmin);
 router.delete("/delete-user", authAdminMiddleware, adminController.deleteUser);
 router.post("/create-admin", authAdminMiddleware, adminController.registerAdmin);
+router.put("/alter-data/:userId", authAdminMiddleware, adminController.updateUser);
 
 module.exports = router;

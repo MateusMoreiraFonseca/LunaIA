@@ -1,6 +1,6 @@
 // userService.js
 const jwt = require("jsonwebtoken");
-const User = require('../models/userModel');
+const User = require("../models/userModel");
 
 const userService = require("./userService");
 
@@ -14,7 +14,7 @@ const createAdmin = async (userData, res) => {
       password,
       nameUser,
       age,
-      isAdmin:true
+      isAdmin: true,
     });
 
     await newUser.save();

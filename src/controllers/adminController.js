@@ -80,9 +80,7 @@ const removeAdmin = async (req, res) => {
       conditions.email = email;
     }
 
-    const userToUpdate = await userService.getUserByIdUsernameEmail(
-      conditions
-    );
+    const userToUpdate = await userService.getUserByIdUsernameEmail(conditions);
 
     if (!userToUpdate) {
       return res.status(404).json({ message: "Usuário não encontrado." });
@@ -91,7 +89,7 @@ const removeAdmin = async (req, res) => {
     if (!userToUpdate.isAdmin) {
       return res
         .status(403)
-        .json({ message: "O usuário já não é um administrador." });
+        .json({ message: "O usuário não é um administrador." });
     }
 
     userToUpdate.isAdmin = false;
@@ -121,9 +119,41 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+
+  const idUser = req.params;
+  try {
+    const user = await userService.getUserByIdUsernameEmail(idUser);
+
+    if (!user) {
+      return res.status(401).json({ message: "Usuário não encontrado." });
+    }
+
+    const { username, password, email, nameUser, age } = req.body;
+
+    const result = await userService.updateUser(user, {
+      username,
+      password,
+      email,
+      nameUser,
+      age,
+    });
+
+    res.status(200).json({ message: result.message });
+  } catch (error) {
+    console.error("Erro ao alterar dados pessoais:", error);
+    res.status(500).json({ message: "Erro interno do servidor." + error });
+  }
+};
+
+module.exports = {
+  updateUser,
+};
+
 module.exports = {
   setAdmin,
   removeAdmin,
   deleteUser,
-  registerAdmin
+  registerAdmin,
+  updateUser,
 };
