@@ -28,12 +28,15 @@ const registerUser = async (req, res) => {
   try {
     const { username, password, email, nameUser, age } = req.body;
 
-    const existingUser = await userService.getUserByIdUsernameEmail({
+    const existingUserByUsername = await userService.getUserByIdUsernameEmail({
       username,
+    });
+
+    const existingUserByEmail = await userService.getUserByIdUsernameEmail({
       email,
     });
 
-    if (existingUser) {
+    if (existingUserByUsername || existingUserByEmail) {
       return res
         .status(400)
         .json({ message: "Usuário ou e-mail já cadastrado." });
@@ -52,6 +55,7 @@ const registerUser = async (req, res) => {
     res.status(500).json({ message: "Erro interno do servidor." });
   }
 };
+
 
 const updateUserBySelf = async (req, res) => {
   try {
