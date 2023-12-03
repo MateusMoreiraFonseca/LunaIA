@@ -1,13 +1,11 @@
-// installRoutes.js
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
+const setupSystem = require("../setup/setupSistema");
 
-const { createAdminUser } = require("../setup/setupAdmin");
+const authAdminMiddleware = require("../middlewares/authAdminMiddleware");
 
-router.get('/install', (req, res) => { 
-    
-    res.send(createAdminUser());
-});
+router.use(authAdminMiddleware);
+router.post("/install", setupSystem.installAll);
 
 module.exports = router;

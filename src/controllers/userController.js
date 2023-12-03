@@ -56,7 +56,6 @@ const registerUser = async (req, res) => {
   }
 };
 
-
 const updateUserBySelf = async (req, res) => {
   try {
     const user = await userService.getUserByIdUsernameEmail(req.user);
