@@ -56,6 +56,7 @@
 7. Sistema CRUD
    Implemente operações de CRUD para os recursos específicos do seu sistema.
    Realize a validação adequada dos dados fornecidos pelo usuário.
+   Status:OK
    
 8. Paginação
    Implemente a lógica de paginação nas rotas de listagem, recebendo os parâmetros limite e página.
@@ -68,6 +69,8 @@
     Utilize o Swagger ou outra ferramenta para gerar a documentação da API (GET /docs).
 
 ## Prazos de Entrega
+
+setx OPENAI_API_KEY "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"
 
 1. **Agendamento de Apresentação:**
 

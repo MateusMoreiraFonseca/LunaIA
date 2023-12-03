@@ -1,7 +1,7 @@
 // userService.js
 const jwt = require("jsonwebtoken");
 
-const User = require("../models/userModel");
+const { User } = require("../models/userModel");
 
 const getUserByIdUsernameEmail = async (conditions) => {
   if (!conditions || Object.keys(conditions).length === 0) {
@@ -28,7 +28,6 @@ const getUserByIdUsernameEmail = async (conditions) => {
 };
 
 module.exports = { getUserByIdUsernameEmail };
-
 
 const createUser = async (userData, res) => {
   try {

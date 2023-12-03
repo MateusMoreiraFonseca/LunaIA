@@ -1,10 +1,11 @@
-// models/userModel.js
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const respostaSchema = new mongoose.Schema({
+const respostaIaSchema = new mongoose.Schema({
   pergunta: { type: String, required: true },
+  titulo: { type: String, required: true },
   resposta: { type: String, required: true },
+  task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' }, 
 });
 
 const userSchema = new mongoose.Schema({
@@ -14,9 +15,10 @@ const userSchema = new mongoose.Schema({
   isAdmin: { type: Boolean, default: false },
   nameUser: { type: String },
   age: { type: Number },
-  RespostasSalvasIA: [respostaSchema],
+  RespostasSalvasIA: [respostaIaSchema],
   resetToken: { type: String },
 });
+
 userSchema.pre("save", async function (next) {
   try {
     if (!this.isModified("password")) {
@@ -35,5 +37,6 @@ userSchema.pre("save", async function (next) {
 });
 
 const User = mongoose.model("User", userSchema);
+const RespostaIa = mongoose.model("RespostaIa", respostaIaSchema);
 
-module.exports = User;
+module.exports = { User, RespostaIa };

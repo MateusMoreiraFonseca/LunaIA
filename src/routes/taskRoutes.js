@@ -13,5 +13,8 @@ router.get("/tasks-for-next-week", taskController.getTasksForNextWeek);
 router.put("/update-task/:taskId", taskController.updateTask);
 router.delete("/delete-task/:taskId", taskController.deleteTask);
 
+router.post("/pergunta-ia/:taskId", taskController.perguntaIA);
+
+
 
 module.exports = router;
