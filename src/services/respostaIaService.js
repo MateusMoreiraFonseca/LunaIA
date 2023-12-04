@@ -22,7 +22,7 @@ const perguntaIA = async (pergunta, task, idUser) => {
     await user.save();
 
     return {
-      respostaIa: respostaIa,
+      respostaIa,
     };
   } catch (error) {
     console.error("Erro ao criar CaixaIA:", error);

@@ -18,9 +18,11 @@ const loginUser = async (req, res) => {
     }
     userService.saveToken(user, res);
 
-    res.status(200).json({ message: "Login com sucesso." });
+    res.status(200).json({ user });
   } catch (error) {
-    res.status(500).json({ message: "Erro interno do servidor." });
+    res
+      .status(500)
+      .json({ message: "Nome de usuário e senha são obrigatórios." });
   }
 };
 
@@ -42,7 +44,7 @@ const registerUser = async (req, res) => {
         .json({ message: "Usuário ou e-mail já cadastrado." });
     }
 
-    await userService.createUser({
+    const createdUser = await userService.createUser({
       username,
       password,
       email,
@@ -50,9 +52,11 @@ const registerUser = async (req, res) => {
       age,
     });
 
-    res.status(201).json({ message: "Cadastro realizado com sucesso." });
+    res.status(201).json({ createdUser });
   } catch (error) {
-    res.status(500).json({ message: "Erro interno do servidor." });
+    res
+      .status(500)
+      .json({ message: "Nome de usuário , senha e email são obrigatórios." });
   }
 };
 
@@ -66,7 +70,7 @@ const updateUserBySelf = async (req, res) => {
 
     const { username, password, email, nameUser, age } = req.body;
 
-    const result = await userService.updateUser(user, {
+    const updatedUser = await userService.updateUser(user, {
       username,
       password,
       email,
@@ -74,7 +78,7 @@ const updateUserBySelf = async (req, res) => {
       age,
     });
 
-    res.status(200).json({ message: result.message });
+    res.status(200).json({ updatedUser });
   } catch (error) {
     console.error("Erro ao alterar dados pessoais:", error);
     res.status(500).json({ message: "Erro interno do servidor." + error });

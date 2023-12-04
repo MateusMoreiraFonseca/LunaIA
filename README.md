@@ -1,87 +1,39 @@
-# ROTEIRO
+# Nome do Projeto
 
-## Configuração do Ambiente
+Este é um projeto desenvolvido como parte da disciplina de Back-End no campus da UTFPR de Cornélio Procópio, PR.
 
-1. **Instalação das Ferramentas Necessárias:**
+## Autor
 
-   - [Node.js](https://nodejs.org/)
-   - [MongoDB](https://www.mongodb.com/try/download/community)
-   - [Visual Studio Code](https://code.visualstudio.com/)
+- **Nome:** Mateus Moreira Fonseca
+- **Contato:** mateus.fonseca1992@gmail.com
 
-2. **Configuração do Repositório:**
+## Descrição
 
-   - Crie um repositório no Git para o seu projeto.
-   - Clone o repositório para a sua máquina.
+Este projeto tem como objetivo ser um gerenciador de tarefas (tasks) e atividades de projetos, com interação de objetos utilizando Inteligência Artificial (IA).
 
-3. **Instalação das Dependências:**
+## Instalação
 
-   - Execute `npm init -y` para iniciar um projeto Node.js.
-   - Instale o Express: `npm install express`.
-   - Instale o Mongoose: `npm install mongoose`.
-   - Instale o Nodemon (opcional, mas útil para desenvolvimento): `npm install nodemon --save-dev`.
-   - Instale o JWT (jsonwebtoken): `npm install jsonwebtoken`.
-   - Instale o Swagger para documentação: `npm install swagger-jsdoc swagger-ui-express`.
+Para instalar as dependências necessárias, siga os passos descritos abaixo:
 
-4. **Configuração do .env:**
-   - Crie um arquivo `.env` para armazenar as configurações sensíveis.
-   - Defina variáveis de ambiente para a conexão com o MongoDB e a chave secreta do JWT.
+1. Execute `npm init -y` para iniciar um projeto Node.js.
+2. Instale o Express: `npm install express`.
+3. Instale o Mongoose: `npm install mongoose`.
+4. Instale o Nodemon (opcional, mas útil para desenvolvimento): `npm install nodemon --save-dev`.
+5. Instale o JWT (jsonwebtoken): `npm install jsonwebtoken`.
+6. Instale o OpenAI para integração: `npm install openai`.
+7. Instale o Path para manipulação de diretórios: `npm install path`.
+8. Instale o Swagger para documentação: `npm install swagger-jsdoc swagger-ui-express`.
 
-## Funcionalidades Propostas
+## Contribuição
 
-1. Cadastro de Usuários
-   Implemente uma rota para o cadastro de usuários, recebendo dados pessoais e credenciais.
-   Status:OK
+Se desejar contribuir com este projeto, siga as instruções abaixo:
 
-2. Usuários Administradores
-   Crie um usuário administrador por padrão durante a instalação do sistema.
-   Implemente uma rota para que administradores possam criar outros administradores.
-   Status:OK
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/MinhaFeature`)
+3. Faça commit das mudanças (`git commit -am 'Adicione uma feature'`)
+4. Faça push para a branch (`git push origin feature/MinhaFeature`)
+5. Abra um Pull Request
 
-3. Rota para Criar Administradores
-   Implemente a rota createUserAdmin para criar administradores.
-   Status:OK
+## Licença
 
-4. Excluir Usuário não Administrador
-   Implemente uma rota para que administradores possam excluir usuários não administradores.
-   Status:OK
-
-5. Rota de Login e Token JWT
-   Implemente a rota loginUser para gerar um token JWT para acesso às rotas protegidas da API.
-   Status:OK
-
-6. Alterar Dados Pessoais
-   Implemente uma rota para que usuários possam alterar seus dados pessoais (updateUserBySelf). Restrinja aos próprios usuários e permita que administradores alterem dados de outros usuários.
-   Status:OK
-
-7. Sistema CRUD
-   Implemente operações de CRUD para os recursos específicos do seu sistema.
-   Realize a validação adequada dos dados fornecidos pelo usuário.
-   Status:OK
-   
-8. Paginação
-   Implemente a lógica de paginação nas rotas de listagem, recebendo os parâmetros limite e página.
-
-9. Lógica de Negócio
-   Implemente uma operação especial de livre escolha, envolvendo processamento de dados, inserção/alteração no banco de dados ou geração de consultas elaboradas.
-
-10. Instalador e Documentação
-    Implemente a rota GET /install/ para realizar a instalação do banco de dados.
-    Utilize o Swagger ou outra ferramenta para gerar a documentação da API (GET /docs).
-
-## Prazos de Entrega
-
-setx OPENAI_API_KEY "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"
-
-1. **Agendamento de Apresentação:**
-
-   - Agende sua apresentação através do Moodle.
-   - Respeite os prazos e evite descontos na nota.
-
-2. **Apresentação ao Professor:**
-
-   - Esteja preparado para apresentar o código ao professor.
-   - Demonstre conhecimento sobre cada parte do seu projeto.
-
-3. **Repositório GIT:**
-   - Mantenha o repositório atualizado com commits incrementais.
-   - Organize o código de forma clara e compreensível.
+[Inclua aqui a licença, caso tenha]

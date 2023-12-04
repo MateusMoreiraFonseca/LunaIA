@@ -24,6 +24,7 @@ const authAdminMiddleware = (req, res, next) => {
       isAdmin: decoded.payload.isAdmin,
     };
 
+
     next();
   } catch (error) {
     res.status(401).json({

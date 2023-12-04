@@ -19,9 +19,9 @@ const resetPassword = async (req, res) => {
 
     user.resetToken = resetToken;
 
-    await user.save();
+    const resetedPasswordUser = await user.save();
 
-    res.status(200).json({ resetToken, message: "Solicitação de reset de senha enviada." });
+    res.status(200).json({message: "Solicitação de reset de senha enviadas para :",resetedPasswordUser });
   } catch (error) {
     console.error("Erro ao solicitar redefinição de senha:", error);
     res.status(500).json({ message: "Erro interno do servidor." });
@@ -47,9 +47,9 @@ const redefinePassword = async (req, res) => {
     user.password = newPassword;
     user.resetToken = null;
 
-    await user.save();
+    const redefinedUser = await user.save();
 
-    return res.status(200).json({ message: "Senha redefinida com sucesso." });
+    return res.status(200).json({ message: "Senha redefinida com sucesso para " , redefinedUser });
   } catch (error) {
     if (error.name === "TokenExpiredError") {
       return res.status(400).json({ message: "Token expirado. Solicite um novo." });

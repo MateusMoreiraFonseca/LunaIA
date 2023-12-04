@@ -7,7 +7,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
 router.use(authMiddleware);
 
 router.post("/create-task", taskController.createTask);
-router.get("/tasks-by-user", taskController.getTasksByUser);
+router.get("/tasks-by-user", taskController.getSelfTasks);
 router.get("/tasks-by-status/:status", taskController.getTasksByStatus);
 router.get("/tasks-for-next-week", taskController.getTasksForNextWeek);
 router.put("/update-task/:taskId", taskController.updateTask);

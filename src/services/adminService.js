@@ -20,7 +20,7 @@ const createAdmin = async (userData, res) => {
     await newUser.save();
 
     return {
-      message: newUser
+      message: newUser,
     };
   } catch (error) {
     throw error;
@@ -31,14 +31,18 @@ const deleteUser = async (conditions) => {
   try {
     const user = await userService.getUserByIdUsernameEmail(conditions);
 
+    if (!user) {
+      return {
+        message: "Usuário não encontrado.",
+      };
+    }
+
     if (!user.isAdmin) {
       await user.deleteOne();
-      return {
-        message: "Usuário excluído com sucesso.",
-      };
+      return { user };
     } else {
       return {
-        message: "Não é possível excluir outros usuários Admins",
+        message: "Não é possível excluir outros usuários Admins.",
       };
     }
   } catch (error) {
@@ -46,5 +50,4 @@ const deleteUser = async (conditions) => {
     throw error;
   }
 };
-
 module.exports = { deleteUser, createAdmin };

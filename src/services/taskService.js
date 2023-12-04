@@ -3,15 +3,13 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-
-
 const createTask = async (taskData) => {
   try {
     const newTask = new Task(taskData);
     await newTask.save();
 
     return {
-      message: "Tarefa criada com sucesso.",
+      newTask,
     };
   } catch (error) {
     console.error("Erro ao criar tarefa:", error);
@@ -21,8 +19,8 @@ const createTask = async (taskData) => {
 
 const getTasksByIdUser = async (userId) => {
   try {
-    const tasks = await Task.find({ assignedUser: userId });
-    return tasks;
+    const findedTasks = await Task.find({ assignedUser: userId });
+    return findedTasks;
   } catch (error) {
     console.error("Erro ao obter tarefas do usuário:", error);
     throw error;
@@ -31,8 +29,11 @@ const getTasksByIdUser = async (userId) => {
 
 const getTasksByStatus = async (status, userId) => {
   try {
-    const tasks = await Task.find({ status: status, assignedUser: userId });
-    return tasks;
+    const findedTasks = await Task.find({
+      status: status,
+      assignedUser: userId,
+    });
+    return findedTasks;
   } catch (error) {
     console.error("Erro ao obter tarefas pelo status:", error);
     throw error;
@@ -41,15 +42,15 @@ const getTasksByStatus = async (status, userId) => {
 
 const getTaskById = async (taskId) => {
   try {
-    const task = await Task.findById(taskId);
+    const findedTask = await Task.findById(taskId);
 
-    if (!task) {
+    if (!findedTask) {
       return {
         error: "Tarefa não encontrada.",
       };
     }
 
-    return task;
+    return findedTask;
   } catch (error) {
     console.error("Erro ao obter tarefa pelo ID:", error);
     throw error;
@@ -58,34 +59,37 @@ const getTaskById = async (taskId) => {
 
 const updateTask = async (taskId, taskData, userId) => {
   try {
-    const task = await Task.findOne({ _id: taskId, assignedUser: userId });
+    const updatedTask = await Task.findOne({
+      _id: taskId,
+      assignedUser: userId,
+    });
 
-    if (!task) {
+    if (!updatedTask) {
       return {
         error: "Tarefa não encontrada ou não pertence ao usuário.",
       };
     }
 
     if (taskData.title !== undefined) {
-      task.title = taskData.title;
+      updatedTask.title = taskData.title;
     }
 
     if (taskData.description !== undefined) {
-      task.description = taskData.description;
+      updatedTask.description = taskData.description;
     }
 
     if (taskData.dueDate !== undefined) {
-      task.dueDate = taskData.dueDate;
+      updatedTask.dueDate = taskData.dueDate;
     }
 
     if (taskData.status !== undefined) {
-      task.status = taskData.status;
+      updatedTask.status = taskData.status;
     }
 
-    await task.save();
+    await updatedTask.save();
 
     return {
-      message: "Tarefa atualizada com sucesso.",
+      updatedTask,
     };
   } catch (error) {
     console.error("Erro ao atualizar tarefa:", error);
@@ -106,10 +110,10 @@ const deleteTask = async (taskId, userId) => {
       };
     }
 
-    await task.deleteOne();
+    const deletedTask = await task.deleteOne();
 
     return {
-      message: "Tarefa excluída com sucesso.",
+      deletedTask,
     };
   } catch (error) {
     console.error("Erro ao excluir tarefa:", error);
@@ -119,12 +123,12 @@ const deleteTask = async (taskId, userId) => {
 
 const getTasksForNextWeek = async (userId, startDate, endDate) => {
   try {
-    const tasks = await Task.find({
+    const fidedTasks = await Task.find({
       assignedUser: userId,
       dueDate: { $gte: startDate, $lte: endDate },
     });
 
-    return tasks;
+    return fidedTasks;
   } catch (error) {
     console.error("Erro ao obter tarefas para a próxima semana:", error);
     throw error;

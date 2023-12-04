@@ -1,3 +1,4 @@
+// src\services\userService.js
 const jwt = require("jsonwebtoken");
 const { User } = require("../models/userModel");
 
@@ -40,7 +41,7 @@ const createUser = async (userData, res) => {
     await newUser.save();
 
     return {
-     newUser
+      newUser,
     };
   } catch (error) {
     throw error;
@@ -78,7 +79,7 @@ const updateUser = async (user, userData, res) => {
     await user.save();
 
     return {
-      message: "Dados pessoais atualizados com sucesso.",
+      user,
     };
   } catch (error) {
     console.error("Erro ao alterar dados pessoais:", error);

@@ -13,10 +13,39 @@ const createTask = async (req, res) => {
       assignedUser: user.userId,
     };
 
-    const task = await taskService.createTask(taskData);
-    res.status(201).json(task);
+    const createdTask = await taskService.createTask(taskData);
+    res.status(201).json(createdTask);
   } catch (error) {
     console.error("Erro ao criar tarefa:", error);
+    res.status(500).json({ message: "Erro interno do servidor." });
+  }
+};
+
+
+
+const deleteTask = async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+    const userId = req.user.userId;
+
+    const deletedTask = await taskService.deleteTask(taskId, userId);
+    res.status(200).json(deletedTask);
+  } catch (error) {
+    console.error("Erro ao excluir tarefa:", error);
+    res.status(500).json({ message: "Erro interno do servidor." });
+  }
+};
+
+const updateTask = async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+    const taskData = req.body;
+    const userId = req.user.userId;
+
+    const updatedTasks = await taskService.updateTask(taskId, taskData, userId);
+    res.status(200).json(updatedTasks);
+  } catch (error) {
+    console.error("Erro ao atualizar tarefa:", error);
     res.status(500).json({ message: "Erro interno do servidor." });
   }
 };
@@ -25,8 +54,8 @@ const getSelfTasks = async (req, res) => {
   try {
     const userId = req.user.userId;
 
-    const tasks = await taskService.getTasksByIdUser(userId);
-    res.status(200).json(tasks);
+    const findedTasks = await taskService.getTasksByIdUser(userId);
+    res.status(200).json(findedTasks);
   } catch (error) {
     console.error("Erro ao obter tarefas do usuário:", error);
     res.status(500).json({ message: "Erro interno do servidor." });
@@ -49,37 +78,10 @@ const getTasksByStatus = async (req, res) => {
     }
 
     const status = statusMapping[statusParam];
-    const tasks = await taskService.getTasksByStatus(status, userId);
-    res.status(200).json(tasks);
+    const findedTasks = await taskService.getTasksByStatus(status, userId);
+    res.status(200).json(findedTasks);
   } catch (error) {
     console.error("Erro ao obter tarefas pelo status:", error);
-    res.status(500).json({ message: "Erro interno do servidor." });
-  }
-};
-
-const deleteTask = async (req, res) => {
-  try {
-    const taskId = req.params.taskId;
-    const userId = req.user.userId;
-
-    const result = await taskService.deleteTask(taskId, userId);
-    res.status(200).json(result);
-  } catch (error) {
-    console.error("Erro ao excluir tarefa:", error);
-    res.status(500).json({ message: "Erro interno do servidor." });
-  }
-};
-
-const updateTask = async (req, res) => {
-  try {
-    const taskId = req.params.taskId;
-    const taskData = req.body;
-    const userId = req.user.userId;
-
-    const result = await taskService.updateTask(taskId, taskData, userId);
-    res.status(200).json(result);
-  } catch (error) {
-    console.error("Erro ao atualizar tarefa:", error);
     res.status(500).json({ message: "Erro interno do servidor." });
   }
 };
@@ -93,13 +95,13 @@ const getTasksForNextWeek = async (req, res) => {
     const nextWeekDate = new Date();
     nextWeekDate.setDate(currentDate.getDate() + 7);
 
-    const tasks = await taskService.getTasksForNextWeek(
+    const findedTasks = await taskService.getTasksForNextWeek(
       userId,
       currentDate,
       nextWeekDate
     );
 
-    res.status(200).json(tasks);
+    res.status(200).json(findedTasks);
   } catch (error) {
     res.status(500).json({ message: "Erro interno do servidor." });
   }
@@ -107,7 +109,7 @@ const getTasksForNextWeek = async (req, res) => {
 
 module.exports = {
   createTask,
-  getTasksByUser: getSelfTasks,
+  getSelfTasks,
   getTasksByStatus,
   updateTask,
   deleteTask,

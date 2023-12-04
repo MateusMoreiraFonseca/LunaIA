@@ -16,7 +16,7 @@ const registerAdmin = async (req, res) => {
         .json({ message: "Usuário ou e-mail já cadastrado." });
     }
 
-    await adminService.createAdmin({
+    const registerdAdmin = await adminService.createAdmin({
       username,
       password,
       email,
@@ -24,7 +24,7 @@ const registerAdmin = async (req, res) => {
       age,
     });
 
-    res.status(201).json({ message: "Cadastro realizado com sucesso." });
+    res.status(201).json({ registerdAdmin });
   } catch (error) {
     res.status(500).json({ message: "Erro interno do servidor." });
   }
@@ -50,11 +50,9 @@ const setAdmin = async (req, res) => {
     }
     userToUpdate.isAdmin = true;
 
-    await userToUpdate.save();
+    const promotedAdmin = await userToUpdate.save();
 
-    res
-      .status(200)
-      .json({ message: "Usuário promovido a administrador com sucesso." });
+    res.status(200).json({ promotedAdmin });
   } catch (error) {
     console.error("Erro ao definir usuário como administrador:", error);
     res.status(500).json({ message: "Erro interno do servidor." });
@@ -93,11 +91,9 @@ const removeAdmin = async (req, res) => {
     }
 
     userToUpdate.isAdmin = false;
-    await userToUpdate.save();
+    const removekAdmin = await userToUpdate.save();
 
-    res
-      .status(200)
-      .json({ message: "Privilégios de administrador removidos com sucesso." });
+    res.status(200).json({ removekAdmin });
   } catch (error) {
     console.error("Erro ao remover privilégios de administrador:", error);
     res.status(500).json({ message: "Erro interno do servidor." });
@@ -110,9 +106,9 @@ const deleteUser = async (req, res) => {
 
     const conditions = { username, password, email };
 
-    const result = await adminService.deleteUser(conditions);
+    const deletedUser = await adminService.deleteUser(conditions);
 
-    res.status(200).json(result);
+    res.status(200).json(deletedUser);
   } catch (error) {
     console.error("Erro ao excluir usuário:", error);
     res.status(500).json({ message: "Erro interno do servidor." + error });
@@ -120,7 +116,6 @@ const deleteUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-
   const idUser = req.params;
   try {
     const user = await userService.getUserByIdUsernameEmail(idUser);
@@ -131,7 +126,7 @@ const updateUser = async (req, res) => {
 
     const { username, password, email, nameUser, age } = req.body;
 
-    const result = await userService.updateUser(user, {
+    const updatedUser = await userService.updateUser(user, {
       username,
       password,
       email,
@@ -139,17 +134,12 @@ const updateUser = async (req, res) => {
       age,
     });
 
-    res.status(200).json({ message: result.message });
+    res.status(200).json({ updatedUser });
   } catch (error) {
     console.error("Erro ao alterar dados pessoais:", error);
     res.status(500).json({ message: "Erro interno do servidor." + error });
   }
 };
-
-module.exports = {
-  updateUser,
-};
-
 module.exports = {
   setAdmin,
   removeAdmin,

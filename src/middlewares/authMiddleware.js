@@ -5,7 +5,7 @@ const authMiddleware = (req, res, next) => {
 
   if (!token) {
     return res.status(401).json({
-      message: "Token de autenticação ausente. Acesso não autorizado.",
+      message: "Acesso não autorizado você não está logado.",
     });
   }
 
@@ -21,7 +21,7 @@ const authMiddleware = (req, res, next) => {
     next();
   } catch (error) {
     res.status(401).json({
-      message: "Token de autenticação inválido. Acesso não autorizado.",
+      message: "Acesso não autorizado.",
     });
   }
 };
