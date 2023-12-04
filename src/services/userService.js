@@ -40,7 +40,7 @@ const createUser = async (userData, res) => {
     await newUser.save();
 
     return {
-      message: "Usuário criado com sucesso.",
+     newUser
     };
   } catch (error) {
     throw error;

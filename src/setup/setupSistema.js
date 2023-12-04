@@ -1,3 +1,4 @@
+const userService = require("../services/userService");
 const { createAdmin } = require("../services/adminService");
 const { createUser } = require("../services/userService");
 const Task = require("../models/taskModel");
@@ -28,6 +29,51 @@ async function installAll(req, res) {
           title: `Task ${j + 1} for ${userData.username}`,
           description: `Description for Task ${j + 1}`,
           dueDate: new Date().setDate(new Date().getDate() + j),
+          assignedUser: newUser.newUser._id,
+        });
+
+        console.log(`Criando tarefa para ${userData.username}`);
+        const savedTask = await newTask.save();
+
+        for (let k = 0; k < 5; k++) {
+          const newRespostaIa = new RespostaIa({
+            pergunta: `Pergunta ${k + 1} for Task ${j + 1}`,
+            titulo: `Título ${k + 1}`,
+            resposta: `Resposta ${k + 1}`,
+            task: savedTask._id,
+          });
+
+          console.log(`Criando resposta de IA para Task ${j + 1}`);
+          await newRespostaIa.save();
+
+          const user = await userService.getUserByIdUsernameEmail(
+            newUser.newUser
+          );
+
+          user.RespostasSalvasIA.push(newRespostaIa);
+          await user.save();
+        }
+      }
+    }
+
+    for (let i = 0; i < 5; i++) {
+      const userData = {
+        username: `admin${i + 1}`,
+        email: `admin${i + 1}@example.com`,
+        password: "adminPassword123",
+        nameUser: `Admin ${i + 1}`,
+        age: 25 + i,
+      };
+
+      console.log(`Criando usuário: ${userData.username}`);
+      const newUser = await createAdmin(userData);
+      createdAdmins.push(newUser);
+
+      for (let j = 0; j < 5; j++) {
+        const newTask = new Task({
+          title: `Task ${j + 1} for ${userData.username}`,
+          description: `Description for Task ${j + 1}`,
+          dueDate: new Date().setDate(new Date().getDate() + j),
           assignedUser: newUser._id,
         });
 
@@ -42,50 +88,17 @@ async function installAll(req, res) {
             task: savedTask._id,
           });
 
-          newRespostaIa.user = newUser._id;
-
           console.log(`Criando resposta de IA para Task ${j + 1}`);
           await newRespostaIa.save();
-        }
-      }
-    }
 
-    for (let i = 0; i < 5; i++) {
-      const adminData = {
-        username: `admin${i + 1}`,
-        email: `admin${i + 1}@example.com`,
-        password: "adminPassword123",
-        nameUser: `Admin ${i + 1}`,
-        age: 30 + i,
-      };
+          const user = await userService.getUserByIdUsernameEmail(
+            newUser.message
+          );
 
-      console.log(`Criando administrador: ${adminData.username}`);
-      const newAdmin = await createAdmin(adminData);
-      createdAdmins.push(newAdmin);
-
-      for (let j = 0; j < 5; j++) {
-        const newTask = new Task({
-          title: `Task ${j + 1} for ${adminData.username}`,
-          description: `Description for Task ${j + 1}`,
-          dueDate: new Date().setDate(new Date().getDate() + j),
-          assignedUser: newAdmin._id,
-        });
-
-        console.log(`Criando tarefa para ${adminData.username}`);
-        const savedTask = await newTask.save();
-
-        for (let k = 0; k < 5; k++) {
-          const newRespostaIa = new RespostaIa({
-            pergunta: `Pergunta ${k + 1} for Task ${j + 1}`,
-            titulo: `Título ${k + 1}`,
-            resposta: `Resposta ${k + 1}`,
-            task: savedTask._id,
-          });
-
-          newRespostaIa.user = newAdmin._id;
-
-          console.log(`Criando resposta de IA para Task ${j + 1}`);
-          await newRespostaIa.save();
+          console.log(user);
+          console.log(newRespostaIa);
+          user.RespostasSalvasIA.push(newRespostaIa);
+          await user.save();
         }
       }
     }

@@ -5,7 +5,7 @@ const setupSystem = require("../setup/setupSistema");
 
 const authAdminMiddleware = require("../middlewares/authAdminMiddleware");
 
-router.use(authAdminMiddleware);
-router.post("/install", setupSystem.installAll);
+
+router.post("/install", authAdminMiddleware, setupSystem.installAll);
 
 module.exports = router;

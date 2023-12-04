@@ -13,8 +13,8 @@ const createTask = async (req, res) => {
       assignedUser: user.userId,
     };
 
-    const result = await taskService.createTask(taskData);
-    res.status(201).json(result);
+    const task = await taskService.createTask(taskData);
+    res.status(201).json(task);
   } catch (error) {
     console.error("Erro ao criar tarefa:", error);
     res.status(500).json({ message: "Erro interno do servidor." });

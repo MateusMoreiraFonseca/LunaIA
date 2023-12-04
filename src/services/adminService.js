@@ -20,7 +20,7 @@ const createAdmin = async (userData, res) => {
     await newUser.save();
 
     return {
-      message: "Usuário criado com sucesso.",
+      message: newUser
     };
   } catch (error) {
     throw error;

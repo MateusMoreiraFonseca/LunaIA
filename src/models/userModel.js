@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
   isAdmin: { type: Boolean, default: false },
   nameUser: { type: String },
   age: { type: Number },
-  RespostasSalvasIA: [respostaIaSchema],
+  RespostasSalvasIA: {type: [respostaIaSchema],default: []},
   resetToken: { type: String },
 });
 
