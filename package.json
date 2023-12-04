@@ -4,7 +4,8 @@
   "description": "Aplicação de Gerenciamento de Tarefas Com IA",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "swagger-autogen": "node swagger.js"
   },
   "keywords": [
     "gerenciamento de tarefas",
@@ -22,6 +23,11 @@
     "mongoose": "^8.0.0",
     "nodemon": "^3.0.1",
     "openai": "^4.20.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "swagger-autogen": "^2.23.7"
   }
 }
