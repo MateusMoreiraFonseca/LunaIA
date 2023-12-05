@@ -7,7 +7,9 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "schemes": ["http"],
+  "schemes": [
+    "http"
+  ],
   "paths": {
     "/install": {
       "post": {
@@ -15,12 +17,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error"
@@ -30,7 +26,7 @@
     },
     "/user/login": {
       "post": {
-        "description": "Rota para realizar login",
+        "description": "Realizar login",
         "parameters": [
           {
             "name": "body",
@@ -39,10 +35,10 @@
               "type": "object",
               "properties": {
                 "username": {
-                  "example": "user 1"
+                  "example": "any"
                 },
                 "password": {
-                  "example": "123456"
+                  "example": "any"
                 }
               }
             }
@@ -58,13 +54,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        },
-        "required": ["username", "password"]
+        }
       }
     },
     "/user/register-user": {
       "post": {
-        "description": "Rota para realizar cadastro de usuário",
+        "description": "Registrar usuário",
         "parameters": [
           {
             "name": "body",
@@ -73,22 +68,21 @@
               "type": "object",
               "properties": {
                 "username": {
-                  "example": "user 2"
+                  "example": "any"
                 },
                 "password": {
-                  "example": "123456"
+                  "example": "any"
                 },
                 "email": {
-                  "example": "user@user.com"
+                  "example": "any"
                 },
                 "nameUser": {
-                  "example": "Carlão"
+                  "example": "any"
                 },
                 "age": {
-                  "example": "32"
+                  "example": "any"
                 }
-              },
-              "required": ["username", "password", "email"]
+              }
             }
           }
         ],
@@ -107,7 +101,7 @@
     },
     "/user/alter-userdata": {
       "put": {
-        "description": "Rota para alterar dados próprios",
+        "description": "Alterar dados próprios",
         "parameters": [
           {
             "name": "body",
@@ -149,7 +143,7 @@
     },
     "/recovery/reset-password": {
       "post": {
-        "description": "Rota para solicitar reset de senha",
+        "description": "Resetar senha",
         "parameters": [
           {
             "name": "body",
@@ -160,8 +154,7 @@
                 "email": {
                   "example": "any"
                 }
-              },
-              "required": ["email"]
+              }
             }
           }
         ],
@@ -180,7 +173,7 @@
     },
     "/recovery/redefine-password": {
       "post": {
-        "description": "Rota para redefinir senha após realizar reset",
+        "description": "Definir uma nova senha",
         "parameters": [
           {
             "name": "body",
@@ -194,7 +187,7 @@
                 "newPassword": {
                   "example": "any"
                 }
-              },"required": ["token", "password"]
+              }
             }
           }
         ],
@@ -216,7 +209,7 @@
     },
     "/admin/set-admin": {
       "put": {
-        "description": "Atribui privilégios de administrador a um usuário existente não administrador",
+        "description": "Atribuir privilégios de admin",
         "parameters": [
           {
             "name": "body",
@@ -233,7 +226,7 @@
                 "email": {
                   "example": "any"
                 }
-              },"required": ["userId"]
+              }
             }
           }
         ],
@@ -261,7 +254,7 @@
     },
     "/admin/remove-admin": {
       "put": {
-        "description": "Remove privilégios de administrador de um usuário existente administrador",
+        "description": "Revogar privilégios de admin",
         "parameters": [
           {
             "name": "body",
@@ -278,7 +271,7 @@
                 "email": {
                   "example": "any"
                 }
-              },"required": ["userId"]
+              }
             }
           }
         ],
@@ -306,7 +299,7 @@
     },
     "/admin/delete-user": {
       "delete": {
-        "description": "Rota para excluir usuário",
+        "description": "Excluir usuário",
         "parameters": [
           {
             "name": "body",
@@ -323,14 +316,7 @@
                 "email": {
                   "example": "any"
                 }
-              },"oneOf": [
-                {
-                  "required": ["username"]
-                },
-                {
-                  "required": ["email"]
-                }
-              ]
+              }
             }
           }
         ],
@@ -352,7 +338,7 @@
     },
     "/admin/create-admin": {
       "post": {
-        "description": "Rota para criar um usuário administrador",
+        "description": "Registar usuário admin",
         "parameters": [
           {
             "name": "body",
@@ -375,7 +361,7 @@
                 "age": {
                   "example": "any"
                 }
-              },"required": ["username","password", "email"]
+              }
             }
           }
         ],
@@ -400,7 +386,7 @@
     },
     "/admin/alter-data/{userId}": {
       "put": {
-        "description": "Rota para administrador alterar informações de um usuário ",
+        "description": "Alterar dados de outros usuários",
         "parameters": [
           {
             "name": "userId",
@@ -451,7 +437,7 @@
     },
     "/tasks/create-task": {
       "post": {
-        "description": "Rota para criar Task",
+        "description": "Criar tarefa",
         "parameters": [
           {
             "name": "body",
@@ -471,7 +457,7 @@
                 "status": {
                   "example": "any"
                 }
-              },"required": ["title", "description"]
+              }
             }
           }
         ],
@@ -490,7 +476,7 @@
     },
     "/tasks/tasks-by-user": {
       "get": {
-        "description": "Rotas para retornar todas as Tasks do usuário",
+        "description": "Buscar tasks do usuário",
         "responses": {
           "200": {
             "description": "OK"
@@ -506,7 +492,7 @@
     },
     "/tasks/tasks-by-status/{status}": {
       "get": {
-        "description": "Rota para retornar as Tasks do usuário utilizando o parametro 'status' ",
+        "description": "Buscar tasks do usuário por status",
         "parameters": [
           {
             "name": "status",
@@ -533,7 +519,7 @@
     },
     "/tasks/tasks-for-next-week": {
       "get": {
-        "description": "Rota para recuperar as rotas com vencimento próximo",
+        "description": "Buscar tasks do usuário próximas ao vencimento",
         "responses": {
           "200": {
             "description": "OK"
@@ -549,7 +535,7 @@
     },
     "/tasks/update-task/{taskId}": {
       "put": {
-        "description": "Rota para atualizar informações de uma Task",
+        "description": "Atualizar task por Id",
         "parameters": [
           {
             "name": "taskId",
@@ -573,7 +559,7 @@
     },
     "/tasks/delete-task/{taskId}": {
       "delete": {
-        "description": "Rota para exclusão de uma Task",
+        "description": "Deletar task por id",
         "parameters": [
           {
             "name": "taskId",
@@ -597,7 +583,7 @@
     },
     "/ia/pergunta-ia/{taskId}": {
       "post": {
-        "description": "Rota para realizar um pergunta contextualizada com a Tasks para a IA 'GPT3.5 Turbo'",
+        "description": "Fazer pergunta a Ia para Id da task",
         "parameters": [
           {
             "name": "taskId",

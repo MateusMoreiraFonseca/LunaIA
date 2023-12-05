@@ -114,7 +114,9 @@ async function installAll(req, res) {
 
     console.log("Instalação concluída!");
 
-    res.status(200).json({ message: responseMessage });
+    res
+      .status(200)
+      .json({ message: responseMessage, createdUsers, createdAdmins });
   } catch (error) {
     console.error("Erro ao criar registros:", error);
 
