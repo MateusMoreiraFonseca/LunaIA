@@ -30,6 +30,13 @@ const createUser = async (userData, res) => {
   try {
     const { username, email, password, nameUser, age } = userData;
 
+    
+    if (age) {
+      if (typeof age !== 'number' || age < 0 || age > 120) {
+        throw new Error("Idade inválida. A idade deve ser um número entre 0 e 120.");
+      }
+    }
+
     const newUser = new User({
       username,
       email,
@@ -73,7 +80,9 @@ const updateUser = async (user, userData, res) => {
     }
 
     if (age) {
-      user.age = age;
+      if (typeof age !== 'number' || age < 0 || age > 120) {
+        throw new Error("Idade inválida. A idade deve ser um número entre 0 e 120.");
+      }
     }
 
     await user.save();

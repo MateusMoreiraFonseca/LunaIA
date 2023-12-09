@@ -15,14 +15,20 @@ Este projeto tem como objetivo ser um gerenciador de tarefas (tasks) e atividade
 
 Para instalar as dependências necessárias, siga os passos descritos abaixo:
 
-1. Execute `npm init -y` para iniciar um projeto Node.js.
-2. Instale o Express: `npm install express`.
-3. Instale o Mongoose: `npm install mongoose`.
-4. Instale o Nodemon (opcional, mas útil para desenvolvimento): `npm install nodemon --save-dev`.
-5. Instale o JWT (jsonwebtoken): `npm install jsonwebtoken`.
-6. Instale o OpenAI para integração: `npm install openai`.
-7. Instale o Path para manipulação de diretórios: `npm install path`.
-8. Instale o Swagger para documentação: `npm install swagger-jsdoc swagger-ui-express`.
+1. Abre o projeto dentro de uma pasta na IDE.
+2. Instale as dependencias com "npm install"
+3. Certifique-se de possuir um instancia do mongod inicializada com seu banco de dados
+4. No projeto o banco de dados foi nomeado como "Luna
+5. Inicie a aplicação com "npm start"
+    1. Certifique-se de receber a mensagem "Conectado ao MongoDB: Luna"
+    2. Caso não receba, existe um problema ao se conctar ao banco de dados
+    3. Recomenda-se verificar as configuraçoes em "src\utils\mongodb.js" e suas settagens em ".env"
+    4. Reinicie a aplicação
+6. As rotas disponível estão na documentacao do Swagger na seguinte rota :
+http://localhost:3000/docs/#/
+7. Recomenda-se fazer a instalação do banco de dados da app através da rota /intall disponível no swagger:
+
+
 
 ## Contribuição
 
@@ -34,6 +40,7 @@ Se desejar contribuir com este projeto, siga as instruções abaixo:
 4. Faça push para a branch (`git push origin feature/MinhaFeature`)
 5. Abra um Pull Request
 
-## Licença
 
-[Inclua aqui a licença, caso tenha]
+
+
+Obs:Ainda não vi como fazer a paginação.Mas pelo oque vi precisaria reconstruir toda Service ou Controller. A Service reconheço que ficou de péssima qualidade.Entendi o conceito melhor mais recentemente de forma que a service deve fazer a validação dos dados de forma que possa ser reutilizadas.Acaba que a controler receberia a responsabilidade de fazer a montagem desses atributos para o método, porém seria interessante então aplicar uma terceira camada que usaria esses métodos no conjuntos de métodos utilizados pelas rotas. Em java chamamos de classe "faixada". 

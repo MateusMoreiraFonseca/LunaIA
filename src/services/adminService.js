@@ -7,6 +7,12 @@ const userService = require("./userService");
 const createAdmin = async (userData, res) => {
   try {
     const { username, email, password, nameUser, age } = userData;
+    
+    if (age) {
+      if (typeof age !== 'number' || age < 0 || age > 120) {
+        throw new Error("Idade inválida. A idade deve ser um número entre 0 e 120.");
+      }
+    }
 
     const newUser = new User({
       username,
